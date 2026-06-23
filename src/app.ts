@@ -4,6 +4,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/auth.routes";
+import bookRoutes from './routes/book.routes';
+import memberRoutes from './routes/member.routes';
 import { errorHandler } from "./middlewares/error.middleware";
 
 const app = express();
@@ -30,6 +32,8 @@ app.use("/api", limiter);
 
 // API Routes
 app.use("/api/auth", authRoutes);
+app.use('/api/books', bookRoutes);
+app.use('/api/members', memberRoutes);
 
 // Health Check
 app.get("/health", (req, res) => {
