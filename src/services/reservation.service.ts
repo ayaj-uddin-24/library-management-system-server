@@ -7,6 +7,12 @@ export class ReservationService {
   }
 
   static async getMemberReservations(memberId: string) {
-    return Reservation.find({ member: memberId }).populate("book");
+    if (!memberId) {
+      throw new AppError("Member ID is required", 400);
+    }
+    return Reservation.find({ member: memberId }).populate(
+      "book",
+      "title author isbn",
+    );
   }
 }

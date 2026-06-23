@@ -1,7 +1,7 @@
 {
   "name": "library-management-system-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a complete library management system server",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
@@ -12,8 +12,13 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "echo \"Tests coming soon\" && exit 0"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "mongodb",
+    "express",
+    "nodejs",
+    "typescript"
+  ],
+  "author": "Ayaj Uddin",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {

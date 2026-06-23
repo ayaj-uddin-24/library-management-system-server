@@ -1,5 +1,4 @@
 import winston from "winston";
-import path from "path";
 
 const logger = winston.createLogger({
   level: process.env.NODE_ENV === "production" ? "info" : "debug",

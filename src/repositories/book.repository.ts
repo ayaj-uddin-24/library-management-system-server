@@ -1,5 +1,4 @@
 import { Book, IBook } from "../models/Book.model";
-import { AppError } from "../middlewares/error.middleware";
 
 export class BookRepository {
   static async create(bookData: Partial<IBook>): Promise<IBook> {

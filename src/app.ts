@@ -15,7 +15,6 @@ import categoryRoutes from "./routes/category.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 
 import { errorHandler } from "./middlewares/error.middleware";
-import logger from "./config/logger";
 
 const app = express();
 
