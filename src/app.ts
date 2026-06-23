@@ -3,17 +3,23 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger";
+
 import authRoutes from "./routes/auth.routes";
 import bookRoutes from "./routes/book.routes";
 import memberRoutes from "./routes/member.routes";
 import borrowingRoutes from "./routes/borrowing.routes";
+import reservationRoutes from "./routes/reservation.routes";
 import categoryRoutes from "./routes/category.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
+
 import { errorHandler } from "./middlewares/error.middleware";
+import logger from "./config/logger";
 
 const app = express();
 
-// Security & Basic Middleware
+// Security
 app.use(helmet());
 app.use(
   cors({
@@ -21,32 +27,36 @@ app.use(
     credentials: true,
   }),
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("combined"));
 
 // Rate Limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: "Too many requests from this IP, please try again later.",
-});
-app.use("/api", limiter);
+app.use(
+  "/api",
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+  }),
+);
 
-// API Routes
+// Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/members", memberRoutes);
 app.use("/api/borrowings", borrowingRoutes);
+app.use("/api/reservations", reservationRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
-// Health Check
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
-});
+// Health
+app.get("/health", (req, res) => res.status(200).json({ status: "healthy" }));
 
-// Error Handler (must be last)
+// Error Handler
 app.use(errorHandler);
 
 export default app;
