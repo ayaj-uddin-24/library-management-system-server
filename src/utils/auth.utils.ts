@@ -15,7 +15,11 @@ export const comparePassword = async (
 };
 
 export const generateAccessToken = (payload: TokenPayload): string => {
-  return jwt.sign(payload, authConfig.jwtSecret as jwt.Secret, {
+  const secret = authConfig.jwtSecret;
+  if (!secret) {
+    throw new Error("JWT_SECRET is not defined in environment variables");
+  }
+  return jwt.sign(payload, secret as jwt.Secret, {
     expiresIn: authConfig.jwtExpiresIn as jwt.SignOptions["expiresIn"],
   });
 };

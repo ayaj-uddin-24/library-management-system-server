@@ -3,8 +3,6 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
-import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./config/swagger";
 
 import authRoutes from "./routes/auth.routes";
 import bookRoutes from "./routes/book.routes";
@@ -40,9 +38,6 @@ app.use(
   }),
 );
 
-// Swagger
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
@@ -53,7 +48,9 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 // Health
-app.get("/health", (req, res) => res.status(200).json({ status: "healthy" }));
+app.get("/", (req, res) =>
+  res.json({ status: 200, message: "Server is running" }),
+);
 
 // Error Handler
 app.use(errorHandler);

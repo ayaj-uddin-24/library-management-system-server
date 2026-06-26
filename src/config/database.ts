@@ -1,14 +1,4 @@
 import mongoose from "mongoose";
-import winston from "winston";
-
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json(),
-  ),
-  transports: [new winston.transports.Console()],
-});
 
 export const connectDB = async (): Promise<void> => {
   try {
@@ -24,7 +14,3 @@ export const connectDB = async (): Promise<void> => {
     process.exit(1);
   }
 };
-
-mongoose.connection.on("disconnected", () => {
-  logger.warn("MongoDB disconnected");
-});
