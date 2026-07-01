@@ -40,8 +40,4 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true },
 );
 
-// Index for faster queries
-UserSchema.index({ email: 1 });
-UserSchema.index({ role: 1 });
-
 export const User = mongoose.model<IUser>("User", UserSchema);

@@ -45,7 +45,6 @@ const MemberSchema = new Schema<IMember>(
   { timestamps: true },
 );
 
-MemberSchema.index({ memberId: 1 });
 MemberSchema.index({ user: 1 });
 
 export const Member = mongoose.model<IMember>("Member", MemberSchema);
